@@ -12,26 +12,21 @@ def board():
 
     """
 
-    print '---------------------------------------------------------'
-    print '| Graded Assignment Project / Nazaraly Nadirbek / END03 |'
-    print '---------------------------------------------------------'
-
     if dataset is None:
-        print 'Dataset has not been loaded, please, select one :'
-        choose_file()
+        load_dataset()
 
-def choose_file():
+def load_dataset():
     """
     Select dataset and load it
 
     """
+    global dataset
 
     for index, value in enumerate(os.listdir(os.path.abspath('data'))):
         if value.endswith('.csv'):
             print '{0}. {1}'.format(index + 1, value)
 
-    filename = raw_input('Filename (with extension) : ')
-    dataset = Dataset({'name' : filename})
+    dataset = Dataset({'name' : raw_input('Filename (with extension) : ')})
 
 def main():
     """
