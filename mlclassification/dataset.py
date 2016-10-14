@@ -13,12 +13,22 @@ class Dataset:
         """
         Initialize variables
 
+        :param arguments: dictionary
         """
 
         self.data = []
         self.target = []
 
         self._parse(arguments)
+
+    def _binarization(self, word):
+        """
+        Converting strings into numeric values
+
+        :param word: string
+        :return: int
+        """
+
 
     def _parse(self, arguments):
         """
@@ -53,7 +63,8 @@ class Dataset:
                         try:
                             row[i] = float(row[i])
                         except ValueError:
-                            pass
+                            if not self.categories:
+                                pass
 
                         arr.append(row[i])
 
