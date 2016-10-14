@@ -2,6 +2,9 @@
 
 import os
 import csv
+import numpy
+
+from sklearn import preprocessing
 
 class Dataset:
     """
@@ -20,6 +23,40 @@ class Dataset:
         self.target = []
 
         self._parse(arguments)
+        self._categorization()
+
+    def _categorization(self):
+        """
+        Convert values into categories like 'no' > 0, 'yes' > 1
+
+        """
+
+        le = preprocessing.LabelEncoder()
+
+        for j in range(len(self.data[0])):
+            if type(self.data[0][j]) == str:
+                le.fit(self._column(j))
+
+                # Transform each value
+                # Worst way
+                for i in range(len(self.data)):
+                    self.data[i][j] = le.transform([self.data[i][j]])
+
+    def _column(self, idx):
+        """
+        Get column
+
+        :param idx: int
+        :return: array
+        """
+
+        arr = []
+
+        for i in range(len(self.data)):
+            if self.data[i][idx] not in arr:
+                arr.append(self.data[i][idx])
+
+        return arr
 
     def _parse(self, arguments):
         """

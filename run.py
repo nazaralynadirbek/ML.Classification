@@ -25,24 +25,27 @@ def board():
         # Classifier
         classifier = Classifier(dataset)
 
-    # Print parent menu
-    print '1. Compare accuracies'
+    while True:
 
-    usr_raw = raw_input('Select : ')
+        # Print parent menu
+        print '1. Compare accuracies'
 
-    if usr_raw == '1':
+        usr_raw = raw_input('Select : ')
 
-        # Print sub menu
-        print '1. k-nearest neighbors'
-        print '2. Decision tree'
-        print '3. Naive Bayes'
-        print '4. All'
+        if usr_raw == '1':
+            # Print sub menu
+            print '1. k-nearest neighbors'
+            print '2. Decision tree'
+            print '3. Naive Bayes'
+            print '4. All'
 
-        # Create array
-        usr_choice = raw_input('Select : ')
-        usr_choice = [int(x) for x in usr_choice]
+            # Create array
+            usr_choice = raw_input('Select : ')
+            usr_choice = [int(x) for x in usr_choice.split(',')]
 
-        #classifier.compare(usr_choice)
+            classifier.compare(usr_choice)
+        else:
+            break
 
 def load_dataset():
     """
@@ -56,7 +59,7 @@ def load_dataset():
             print '{0}. {1}'.format(index + 1, value)
 
     # Dataset
-    dataset = Dataset({'name' : raw_input('Filename (with extension) : ')})
+    dataset = Dataset({'name': raw_input('Filename (with extension) : ')})
 
 def main():
     """
@@ -66,7 +69,5 @@ def main():
 
     # Show menu
     board()
-
-    print dataset.data
 
 main()

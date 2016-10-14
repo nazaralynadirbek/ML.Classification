@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from sklearn import metrics
-from sklearn.cross_validation import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.cross_validation import train_test_split
 
 class Classifier:
     """
@@ -34,10 +36,28 @@ class Classifier:
             print 'KNN ACCURACY :', metrics.accuracy_score(self.test_target, neigh.predict(self.test_data))
 
     def _dt(self, **kwargs):
-        pass
+        """
+        Decision tree
+
+        """
+
+        dt = DecisionTreeClassifier()
+        dt.fit(self.train_data, self.train_target)
+
+        if 'compare' in kwargs:
+            print 'DT ACCURACY :', metrics.accuracy_score(self.test_target, dt.predict(self.test_data))
 
     def _nv(self, **kwargs):
-        pass
+        """
+        Naïve-base
+
+        """
+
+        nv = GaussianNB()
+        nv.fit(self.train_data, self.train_target)
+
+        if 'compare' in kwargs:
+            print 'NV ACCURACY :', metrics.accuracy_score(self.test_target, nv.predict(self.test_data))
 
     def compare(self, usr_choice=[4]):
         """
