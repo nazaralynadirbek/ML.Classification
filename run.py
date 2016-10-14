@@ -42,7 +42,7 @@ def board():
         usr_choice = raw_input('Select : ')
         usr_choice = [int(x) for x in usr_choice]
 
-        classifier.compare(usr_choice)
+        #classifier.compare(usr_choice)
 
 def load_dataset():
     """
@@ -67,6 +67,6 @@ def main():
     # Show menu
     board()
 
-    print dataset.startpoint
+    print dataset.data
 
 main()

@@ -21,15 +21,6 @@ class Dataset:
 
         self._parse(arguments)
 
-    def _binarization(self, word):
-        """
-        Converting strings into numeric values
-
-        :param word: string
-        :return: int
-        """
-
-
     def _parse(self, arguments):
         """
         Parse csv file
@@ -58,12 +49,16 @@ class Dataset:
                         else:
                             self.target.append(1)
                     else:
+                        if row[i] == 'no':
+                            row[i] = 0
+                        elif row[i] == 'yes':
+                            row[i] = 1
+                        else:
 
-                        # convert to float if possible
-                        try:
-                            row[i] = float(row[i])
-                        except ValueError:
-                            if not self.categories:
+                            # convert to float if possible
+                            try:
+                                row[i] = float(row[i])
+                            except ValueError:
                                 pass
 
                         arr.append(row[i])
