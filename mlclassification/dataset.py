@@ -24,12 +24,15 @@ class Dataset:
 
         self._parse(arguments)
         self._categorization()
+        self._normalization()
 
     def _categorization(self):
         """
         Convert values into categories like 'no' > 0, 'yes' > 1
 
         """
+
+        print 'Categorization...'
 
         le = preprocessing.LabelEncoder()
 
@@ -41,6 +44,24 @@ class Dataset:
                 # Worst way
                 for i in range(len(self.data)):
                     self.data[i][j] = le.transform([self.data[i][j]])
+
+    def _normalization(self):
+        """
+        Scales all numeric values in the range of [0,1]
+
+        """
+
+        print 'Normalization...'
+
+        for j in range(len(self.data[0])):
+
+            # Get column and find max and min of this column
+            column = self._column(j)
+            maxv = max(column)
+            minv = min(column)
+
+            for i in range(len(self.data)):
+                self.data[i][j] = (self.data[i][j] - minv) / (maxv - minv)
 
     def _column(self, idx):
         """
@@ -64,6 +85,8 @@ class Dataset:
 
         :param arguments: dictionary
         """
+
+        print 'Loading...'
 
         # Get name
         self.name = arguments['name']

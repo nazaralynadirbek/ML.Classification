@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import warnings
 
 from mlclassification.dataset import Dataset
 from mlclassification.classifier import Classifier
@@ -37,7 +38,9 @@ def board():
             print '1. k-nearest neighbors'
             print '2. Decision tree'
             print '3. Naive Bayes'
-            print '4. All'
+            print '4. Linear Regression'
+            print '5. Logistic Regression'
+            print '6. All'
 
             # Create array
             usr_choice = raw_input('Select : ')
@@ -66,6 +69,9 @@ def main():
     Start point
 
     """
+
+    # Ignore some warnings
+    warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
 
     # Show menu
     board()

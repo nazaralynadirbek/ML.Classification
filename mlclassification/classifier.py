@@ -3,7 +3,9 @@
 from sklearn import metrics
 from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.cross_validation import train_test_split
 
 class Classifier:
@@ -59,6 +61,30 @@ class Classifier:
         if 'compare' in kwargs:
             print 'NV ACCURACY :', metrics.accuracy_score(self.test_target, nv.predict(self.test_data))
 
+    def _lrm(self, **kwargs):
+        """
+        Linear Regression
+
+        """
+
+        reg = LinearRegression()
+        reg.fit(self.train_data, self.train_target)
+
+        if 'compare' in kwargs:
+            print 'NOT ADDED'
+
+    def _logit(self, **kwargs):
+        """
+        Logistic Regression
+
+        """
+
+        logit = LogisticRegression()
+        logit.fit(self.train_data, self.train_target)
+
+        if 'compare' in kwargs:
+            print 'NOT ADDED'
+
     def compare(self, usr_choice=[4]):
         """
         Compare accuracies of selected algorithms
@@ -78,8 +104,18 @@ class Classifier:
         if 3 in usr_choice:
             self._nv(compare=True)
 
-        # All
+        # Linear Regression
         if 4 in usr_choice:
+            self._lrm(compare=True)
+
+        # Logistic Regression
+        if 5 in usr_choice:
+            self._logit(compare=True)
+
+        # All
+        if 6 in usr_choice:
             self._knn(compare=True)
             self._dt(compare=True)
             self._nv(compare=True)
+            self._lrm(compare=True)
+            self._logit(compare=True)
