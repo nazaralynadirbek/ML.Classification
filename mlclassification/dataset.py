@@ -38,12 +38,12 @@ class Dataset:
 
         for j in range(len(self.data[0])):
             if type(self.data[0][j]) == str:
-                le.fit(self._column(j))
+                le.fit(self._column(j, unique=True))
 
                 # Transform each value
                 # Worst way
                 for i in range(len(self.data)):
-                    self.data[i][j] = le.transform([self.data[i][j]])
+                    self.data[i][j] = float(le.transform([self.data[i][j]]))
 
     def _normalization(self):
         """
@@ -63,7 +63,7 @@ class Dataset:
             for i in range(len(self.data)):
                 self.data[i][j] = (self.data[i][j] - minv) / (maxv - minv)
 
-    def _column(self, idx):
+    def _column(self, idx, unique=False):
         """
         Get column
 
@@ -73,9 +73,35 @@ class Dataset:
 
         arr = []
 
-        for i in range(len(self.data)):
-            if self.data[i][idx] not in arr:
+        if unique:
+            for i in range(len(self.data)):
+                if self.data[i][idx] not in arr:
+                    arr.append(self.data[i][idx])
+        else:
+            for i in range(len(self.data)):
                 arr.append(self.data[i][idx])
+
+        return arr
+
+    def rotate(self):
+        """
+        Rotate array
+
+        :return: array
+        """
+
+        arr = []
+
+        for j in range(len(self.data[0])):
+
+            # Get column
+            column = self._column(j)
+
+            # Append to result
+            arr.append(column)
+
+        # Append target array
+        arr.append(self.target)
 
         return arr
 
@@ -124,3 +150,14 @@ class Dataset:
                         arr.append(row[i])
 
                 self.data.append(arr)
+
+    def write(self, filename):
+        """
+        Create file and write data into it
+
+        :param filename: string
+        """
+
+        with open(os.path.abspath('output/{0}'.format(filename)), 'wb') as file:
+            writer = csv.writer(file)
+            writer.writerows(self.data)

@@ -30,10 +30,13 @@ def board():
 
         # Print parent menu
         print '1. Compare accuracies'
+        print '2. Show the scatter plot'
+        print '3. Output'
 
         usr_raw = raw_input('Select : ')
 
         if usr_raw == '1':
+
             # Print sub menu
             print '1. k-nearest neighbors'
             print '2. Decision tree'
@@ -47,6 +50,18 @@ def board():
             usr_choice = [int(x) for x in usr_choice.split(',')]
 
             classifier.compare(usr_choice)
+        elif usr_raw == '2':
+
+            # Display scatter plot
+            classifier.scatter()
+
+        elif usr_raw == '3':
+
+            # Write data into file
+            # Filename
+
+            usr_choice = raw_input('Filename : ')
+            dataset.write(usr_choice)
         else:
             break
 

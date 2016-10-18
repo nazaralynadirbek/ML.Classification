@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import numpy
+
 from sklearn import metrics
+from matplotlib import pyplot
 from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LinearRegression
@@ -20,6 +23,9 @@ class Classifier:
 
         :param dataset: object
         """
+
+        # Rotated dataset
+        self.rotated = dataset.rotate()
 
         # Divide dataset into two subsets - train set and test set
         self.train_data, self.test_data, \
@@ -119,3 +125,24 @@ class Classifier:
             self._nv(compare=True)
             self._lrm(compare=True)
             self._logit(compare=True)
+
+    def scatter(self):
+        """
+        Show scatter plot
+
+        """
+
+        print 'Drawing...'
+
+        for i in range(len(self.rotated)):
+            for j in range(i + 1, len(self.rotated)):
+
+                # Calculate correlation
+                corrcoef = numpy.corrcoef(self.rotated[i], self.rotated[j])[0, 1]
+
+                if corrcoef >= 0.5:
+                    pyplot.scatter(self.rotated[i], self.rotated[j], color='r')
+
+        pyplot.xlabel('X')
+        pyplot.ylabel('y')
+        pyplot.show()
