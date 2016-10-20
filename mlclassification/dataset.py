@@ -37,12 +37,12 @@ class Dataset:
         le = preprocessing.LabelEncoder()
 
         for j in range(len(self.data[0])):
-            if type(self.data[0][j]) == str:
-                le.fit(self._column(j, unique=True))
+            le.fit(self._column(j, unique=True))
 
-                # Transform each value
-                # Worst way
-                for i in range(len(self.data)):
+            # Transform each value
+            # Worst way
+            for i in range(len(self.data)):
+                if type(self.data[i][j]) == str:
                     self.data[i][j] = float(le.transform([self.data[i][j]]))
 
     def _normalization(self):
@@ -122,6 +122,9 @@ class Dataset:
 
         with open(path) as csvfile:
             reader = csv.reader(csvfile, quotechar='"', delimiter=';', quoting=csv.QUOTE_ALL, skipinitialspace=True)
+
+            # Header
+            self.header = next(reader)
 
             for row in reader:
                 arr = []

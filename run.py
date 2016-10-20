@@ -72,9 +72,16 @@ def load_dataset():
     """
     global dataset
 
-    for index, value in enumerate(os.listdir(os.path.abspath('data'))):
+    # Array of csv files
+    files = []
+
+    for value in os.listdir(os.path.abspath('data')):
         if value.endswith('.csv'):
-            print '{0}. {1}'.format(index + 1, value)
+            files.append(value)
+
+    # Show files
+    for index, file in enumerate(files):
+        print '{0}. {1}'.format(index + 1, file)
 
     # Dataset
     dataset = Dataset({'name': raw_input('Filename (with extension) : ')})
