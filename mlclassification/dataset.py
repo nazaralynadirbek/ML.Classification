@@ -160,6 +160,12 @@ class Dataset:
         :param filename: string
         """
 
-        with open(os.path.abspath('output/{0}'.format(filename)), 'wb') as file:
+        dir = os.path.abspath('output')
+
+        # Check existing of folder
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+
+        with open(os.path.abspath('output/{0}').format(filename), 'wb') as file:
             writer = csv.writer(file)
             writer.writerows(self.data)
