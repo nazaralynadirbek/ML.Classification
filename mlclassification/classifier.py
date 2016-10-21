@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import math
 import numpy
 
 from sklearn import metrics
@@ -24,12 +25,15 @@ class Classifier:
         :param dataset: object
         """
 
+        # Train size
+        self.train_size = 0.3
+
         # Rotated dataset
         self.rotated = dataset.rotate()
 
         # Divide dataset into two subsets - train set and test set
         self.train_data, self.test_data, \
-        self.train_target, self.test_target = train_test_split(dataset.data, dataset.target, train_size=0.5, random_state=0)
+        self.train_target, self.test_target = train_test_split(dataset.data, dataset.target, train_size=self.train_size, random_state=0)
 
     def _knn(self, **kwargs):
         """
@@ -77,7 +81,10 @@ class Classifier:
         reg.fit(self.train_data, self.train_target)
 
         if 'compare' in kwargs:
-            print 'NOT ADDED'
+            print 'LRM ACCURACY :'
+            print '------ %-R^2 :', 'NOT ADDED'
+            print '------ RMSE  :', math.sqrt(metrics.mean_squared_error(self.test_target, reg.predict(self.test_data)))
+            print '------ MSE   :', metrics.mean_squared_error(self.test_target, reg.predict(self.test_data))
 
     def _logit(self, **kwargs):
         """
@@ -89,7 +96,10 @@ class Classifier:
         logit.fit(self.train_data, self.train_target)
 
         if 'compare' in kwargs:
-            print 'NOT ADDED'
+            print 'LOGIT ACCURACY :'
+            print '------ %-R^2 :', 'NOT ADDED'
+            print '------ RMSE  :', math.sqrt(metrics.mean_squared_error(self.test_target, logit.predict(self.test_data)))
+            print '------ MSE   :', metrics.mean_squared_error(self.test_target, logit.predict(self.test_data))
 
     def compare(self, usr_choice=[4]):
         """

@@ -2,7 +2,6 @@
 
 import os
 import csv
-import numpy
 
 from sklearn import preprocessing
 
