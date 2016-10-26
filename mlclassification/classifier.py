@@ -173,4 +173,6 @@ class Classifier:
                     a, b = self._bfit_line(self.rotated[i], self.rotated[j])
                     yfit = [a + b * xi for xi in self.rotated[i]]
                     pyplot.plot(self.rotated[i], yfit, 'g')
+                    pyplot.xlabel(self.dataset.header[i])
+                    pyplot.ylabel(self.dataset.header[j])
                     pyplot.show()
