@@ -59,7 +59,6 @@ def board():
 
             # Write data into file
             # Filename
-
             usr_choice = raw_input('Filename : ')
             dataset.write(usr_choice)
         else:
